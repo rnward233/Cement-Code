@@ -1,0 +1,33 @@
+def calculate_slurry(water_gal, cement_sg, bentonite_pct):
+    # Constants
+    sack_weight = 94  # lbm/sk
+    water_density = 8.34  # lbm/gal
+    bentonite_sg = 2.65
+    gal_per_ft3 = 7.48
+
+    # Adjusted water and weights
+    water_total = water_gal + (bentonite_pct * 1.3 / 2)
+    water_weight = water_total * water_density
+    bentonite_weight = sack_weight * bentonite_pct / 100
+
+    # Volumes
+    cement_vol = sack_weight / (cement_sg * water_density)
+    bentonite_vol = bentonite_weight / (bentonite_sg * water_density)
+    total_vol = cement_vol + bentonite_vol + water_total
+
+    # Outputs
+    slurry_density = (sack_weight + water_weight + bentonite_weight) / total_vol
+    yield_ft3 = total_vol / gal_per_ft3
+    percent_mix = water_weight / sack_weight * 100
+
+    print("\n--- Slurry Summary ---")
+    print(f"Water Added: {water_total:.2f} gal/sk")
+    print(f"Slurry Density: {slurry_density:.2f} lbm/gal")
+    print(f"Water Mix: {percent_mix:.1f}%")
+    print(f"Yield: {yield_ft3:.2f} ft³/sk")
+
+
+if __name__ == "__main__":
+    w = float(input("Water (gal/sk): "))
+    sg = float(input("Cement SG: "))
+    b = float(input("Bentonite % BWOC: "))
